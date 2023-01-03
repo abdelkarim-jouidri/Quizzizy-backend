@@ -91,32 +91,73 @@
     //         Explanation : "The AWS Acceptable Use Policy provides information regarding prohibited actions on the AWS infrastructure."
     //     }
     // ]
+
+    let QuestionsData;
     let QuestionsCopy = []
+    let selectedAnswers = []
     const DATA_LENGTH = 10
 
-    fetch('questions_data.json').then(res=>res.json()).then(data=>QuestionsCopy=[...data])
+    
+    
+    let startBtn = document.getElementById('start-btn')
+    let restartBtn = document.getElementById('restart-btn')
+    let questionsContainer = document.getElementById('questions-container')
+    let questionsCardsContainer = document.getElementById('questions-cards-container')
+    let informationContainer = document.getElementById('information-container')
+    let resultsContainer = document.getElementById('results-container')
+    let quizzProgress = 0
+    let score = 0;
+    let scoreText = document.getElementById('score-text')
+    let counter = 0;
+    let width = 0;
+    let stepProgress = document.getElementById('stepper-progress');
 
-        let startBtn = document.getElementById('start-btn')
-        let restartBtn = document.getElementById('restart-btn')
-        let questionsContainer = document.getElementById('questions-container')
-        let questionsCardsContainer = document.getElementById('questions-cards-container')
-        let informationContainer = document.getElementById('information-container')
-        let resultsContainer = document.getElementById('results-container')
-        let quizzProgress = 0
-        let score = 0;
-        let scoreText = document.getElementById('score-text')
-        let counter = 0;
-        let width = 0;
-        let stepProgress = document.getElementById('stepper-progress');
-    
-        currentRandomQuestion = {}
-    
-        let wrongAnswers = []
-        let correctAnswers = []
-        let questionsBtns = Array.from(document.getElementsByClassName('card'))
+    currentRandomQuestion = {}
+    let answersData = []
+    let wrongAnswers = []
+    let correctAnswers = []
+    let questionsBtns = Array.from(document.getElementsByClassName('card'))
     
     
+    function fetchQuestionsData(){
+        fetch('questions_data.json')
+        .then(res=>res.json())
+        .then(data=>QuestionsData=[...data])
+        .catch(error=>{
+            console.error(error)
+        })
+    } 
+    function fetchAnswersData(){
+        fetch('answers_explanation_data.json')
+        .then(res=>res.json())
+        .then(data=>{
+            console.log('answers data',data)
+            checkAnswers(data)
+        })
+        .catch(error=>{
+            console.error(error)
+        })
+    }
+
+    function checkAnswers(data){
+        data.forEach(answer=>{
+            const questionId = answer.questionId
+            const questionIndex = selectedAnswers.findIndex(selectedAnswer=>selectedAnswer.id==questionId)
+            const selectedAnswerObject = selectedAnswers[questionIndex]
+            // console.log('question from fetch answers data side by side to the answer: ',selectedAnswers[questionIndex],answer)
+            if(selectedAnswers[questionIndex].selectedAnswer==answer.answer) {
+                correctAnswers.push({...selectedAnswerObject,'answer':answer.answer , 'explanation':answer.explanation})
+                score++
+            }
+            else    wrongAnswers.push({...selectedAnswerObject,'answer':answer.answer , 'explanation':answer.explanation})
+             
+        })
+
+        console.log('wrong answers',wrongAnswers)
+        console.log('corrAnswers ',correctAnswers)
+    }
     
+    fetchQuestionsData();
     
     function GoToPage(pageNumber){
         if(pageNumber===1){
@@ -161,13 +202,14 @@
         resetParameters()
         increaseProgress(0)
         resultsContainer.classList.add('hidden')
-        
+        console.log('coming from restart quizz : ',QuestionsCopy)
         startQuizz()
     }
     
     function startQuizz(){
-        // QuestionsCopy=[...Questions]
-        console.log(QuestionsCopy)
+        QuestionsCopy = [...QuestionsData]
+        console.log('QuestionsCopy :',QuestionsCopy)
+        console.log('Questions:',QuestionsData)
         generateNextQuestion()
         GoToPage(2)
     }
@@ -176,13 +218,15 @@
         increaseProgress(quizzProgress)
         quizzProgress++
         if(QuestionsCopy.length===0){
+            fetchAnswersData()
             setTimeout(()=>{
-                scoreText.innerText=`your score is : ${score}/10`;
+            scoreText.innerText=`your score is : ${score}/10`;
+                
                 printAnswers(correctAnswers)
                 printAnswers(wrongAnswers)
                 GoToPage(3);
+                // fetchQuestionsData()
             },500)
-            
             return;
         }
         
@@ -218,16 +262,18 @@
     //attach an onclick event listener to each button containing the choices for the questions
     questionsBtns.forEach(btn=>{
         btn.addEventListener('click',(e)=>{
-            const selectedAnswer = e.target.innerText;
-            if(e.target.dataset.answer == currentRandomQuestion.Answer) {
-                correctAnswers.push({...currentRandomQuestion,'selectedAnswer':selectedAnswer})
-                colorAnswer(e.target,'correct')
-                score++;
-            }
-            else {
-                wrongAnswers.push({...currentRandomQuestion,'selectedAnswer':selectedAnswer})
-                colorAnswer(e.target,'incorrect')
-            }
+            const selectedAnswer = `${e.target.dataset.answer}`;
+            // if(e.target.dataset.answer == currentRandomQuestion.Answer) {
+            //     colorAnswer(e.target,'correct')
+            //     score++;
+            // }
+            // else {
+            //     wrongAnswers.push({...currentRandomQuestion,'selectedAnswer':selectedAnswer})
+            //     colorAnswer(e.target,'incorrect')
+            // }
+            // console.log(e.target)
+            selectedAnswers.push({...currentRandomQuestion,'selectedAnswer':selectedAnswer})
+            console.log(selectedAnswers)
             generateNextQuestion()
 
         })
@@ -254,14 +300,14 @@
         function printAnswers(answersArray){
             //rendering function for the results page
             let markup = ''
-            correctAnswers.forEach(answer => {
+            answersArray.forEach(answer => {
                 console.log(answer)
                 markup += `<div class=${answersArray == correctAnswers ? 'correct-answer' : 'wrong-answer'}>
                     <li><span class="first-word">Question</span> : ${answer.question}</li>
                     <hr>
                     <li><span class="first-word">Selected Answer</span> : ${answer.selectedAnswer}</li>
-                    <li><span class="first-word">Answer</span> : ${answer[answer.Answer]}</li>
-                    <li><span class="first-word">Explanation</span> : ${answer.Explanation}</li>
+                    <li><span class="first-word">Answer</span> : ${answer.answer}</li>
+                    <li><span class="first-word">Explanation</span> : ${answer.explanation}</li>
                 </div>`
     
             })
