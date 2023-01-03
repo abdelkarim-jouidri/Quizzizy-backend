@@ -1,0 +1,287 @@
+$photo-header-width : 1200px;
+$bg-color :#eeeeee;
+$primary-color : #ffdf59;
+$incorrect-answer-color : #ee2626;
+$correct-answer-color : #158a08;
+$logo-width: 100px;
+$stepper-width : 1500px;
+$dots-width : 50px;
+$dots-list:(1,2,3);
+@mixin display-flex($position:center) {
+    display: flex;
+    justify-content: $position;
+}
+
+@mixin generate-dot-text($number , $text){
+    #dot#{$number}::after{
+        content: '#{$text}';
+        width: 100%;
+        position: absolute;
+        top: 120%;
+        left: -15%;
+        display: block;
+        font-weight: normal;
+        font-size: small;
+    }
+}
+
+@mixin resultsContainer($color){
+        margin-top: 10px;
+        border: #0b0a0a solid 2px;
+        color: #0b0a0a;
+        padding: 10px 30px;
+        border-left: 10px solid #{$color};
+        font-size: .7em;
+        font-weight: normal;
+        background-color: #fff;
+        border-radius: 10px;
+}
+
+
+
+body{
+    background-color: $bg-color;
+    height: 100%;
+}
+
+
+
+header {
+    .logo{
+        background-color: $primary-color;
+        @include display-flex;
+        align-items: center;
+        h3,h5{
+            text-align: center;
+            margin: 0;
+        }
+        img{
+            width: $logo-width;
+
+        }
+        
+        h5{
+            font-weight: normal;
+        }
+    }
+    
+    box-shadow: 0px 1px 0px  rgb(16, 16, 16);
+    margin-bottom: 10px;
+}
+
+main{
+    .wrapper{
+        padding:  10px 10px;
+        padding-bottom: 30px;
+        border: 1px #000000 solid;
+        border-radius: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .stepper{
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+
+            .dot{
+                height: $dots-width;
+                width: $dots-width;
+                background-color: #ffdf59;
+                border-radius: 50%;
+                @include display-flex(center);
+                align-items : center;
+                position: relative;
+
+            }
+            @include generate-dot-text(1,'INFROMATION' );
+            @include generate-dot-text(2,'QUESTIONS' );
+            @include generate-dot-text(3,'RESULTS' );
+
+            &::after{
+                content: '';
+                height: 6px;
+                background-color: #ccc9c9;
+                width: 100%;
+                position: absolute;
+                z-index: -1;
+            }
+            .stepper-progress{
+                transition: ease-in-out 0.4s;
+                height: 6px;
+                background-color: #0b0a0a;
+                width: 0;
+                position: absolute;
+            }
+
+        }
+        
+    }
+
+    .question-cards-container{
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: 45% 45%;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px;
+        justify-content: center;
+        .card{
+            background-color: #aaa9a4;
+            color: #eeeeee;
+            border: #000000 1px solid;
+            cursor: pointer;
+            font-size: large;
+            margin-top: 10px;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 1px 1px 2px 1px;
+            &:hover{
+                background-color: #e0c249;
+                color: #000000;
+            }
+        }
+    }
+    
+    }
+
+.btn-container{
+    margin-top: 40px;
+    @include display-flex(center);
+    
+}
+
+
+
+.stepper-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    
+}
+
+.hidden{
+    display: none !important;
+}
+
+
+.section-container {
+    width: 80%;
+    margin: 0 auto;
+    h1{
+        text-align: center;
+    }
+}
+
+
+.pending{
+    background-color: #ccc9c9 !important;
+    border: 0;
+}
+
+.active{
+    background-color: $primary-color !important;
+    border: #000000 3px solid;
+    transition: ease-in-out 0.4s;
+}
+
+.question-heading-container{
+    box-shadow: 0px 3px 3px 2px;
+    padding: 1px;
+    margin: 20px 0;
+    h1{
+        padding: 10px;
+        margin: 0;
+        font-size: 1.4rem;
+
+    }
+    
+}
+
+
+.btn-container{
+    .start-btn{
+        background-color: $primary-color;
+        border: 2px #000000 solid;
+        border-radius: 10px;
+        font-weight: bold;
+        padding: 10px 20px;
+        cursor: pointer;
+        &:hover{
+            box-shadow: 1px 1px 1px;
+        }
+    }
+}
+
+
+.progress-container{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .progress-bar-outer{
+        width: 80%;
+        height: 3em;
+        background-color: #000000;
+        color: #fff;
+        border-radius: 1.5em;
+        border: 2px #000000 solid;
+        display: flex;
+        align-items: center;
+        position: relative;
+        .progress-bar-inner{
+            color: #9d9d9d;
+            display: flex;
+            align-items: center;
+            height: 3.5em;
+            border-radius: 1.5em;
+            width: 0;
+            background-color: $primary-color;
+            max-width: 100%;
+            transition: ease-in-out 0.4s;
+            font-size: .7rem;
+            font-weight: bold;
+            
+        }
+        #progress-text{
+            position: absolute;
+            color: rgb(157, 155, 155);
+        }
+    }
+}
+
+.correct-answers-explanation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    .correct-answer{
+        @include resultsContainer($correct-answer-color);
+        &:first-child{
+            margin: 0;
+        }
+        
+    }
+    .wrong-answer{
+        @include resultsContainer($incorrect-answer-color)
+    }
+
+    li{
+        text-align: left;
+        margin-top: 10px;
+    }
+    .first-word{
+        font-weight: bold;
+    }
+}
+
+
+.answer-incorrect{
+    background: $incorrect-answer-color !important;
+}
+.answer-correct{
+    background: $correct-answer-color !important;
+}

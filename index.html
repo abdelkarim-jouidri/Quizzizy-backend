@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Quizizy</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="aws.webp" alt="" >
+                <div>
+                    <h3>QUIZIZY</h3>
+                <h5>AWS TRAINING</h5>
+                </div>
+            </div>
+        </header>
+        <main>
+            
+            <div class="wrapper">
+                <div class="stepper-container">
+
+                    <div class="stepper">
+                        <div class="stepper-progress" id="stepper-progress"></div>
+                        <div class="dot active" id="dot1">
+                            1
+                        </div>
+                       
+                        <div class="dot pending" id="dot2">
+                            2
+                        </div>
+                        <div class="dot pending" id="dot3">
+                            3
+                    </div>
+                    
+                </div>
+                </div>
+            </div>
+            
+            <div class="section-container hidden" id="questions-container">
+                <div class="question-heading-container">
+                    <h1 id="question-heading"></h1>
+                </div>
+                <div class="question-cards-container " id="questions-cards-container">
+                    <button class="card"  data-answer='A'></button>
+                    <button class="card"  data-answer='B'></button>
+                    <button class="card"  data-answer='C'></button>
+                    <button class="card"  data-answer='D'></button>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar-outer">
+                        <div class="progress-bar-inner">
+                        </div>
+                        <h4 id="progress-text"></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="section-container " id="information-container">
+                <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. </h1>
+                <p>
+                    Welcome to the AWS Quiz! In this quiz, you'll be tested on your knowledge of a wide range of AWS topics, 
+                    including services, concepts, and best practices. Whether you're an experienced AWS user or new to the platform,
+                     this quiz is a great way to challenge your skills and learn more about AWS.
+
+                    To begin, simply read the instructions below and start answering the questions. 
+                    We wish you the best of luck and hope you enjoy the quiz!
+                </p>
+                <div class="btn-container">
+                    <button id="start-btn" class="start-btn" onclick="startQuizz()">Start the QUIZZ</button>
+                </div>
+            </div>
+            <div class="section-container hidden" id="results-container">
+                <h1>
+                    Well done on reaching the end of the app! Your dedication and perseverance have paid off and we're sure you have learned a lot.
+                     Keep striving for success!   🙌🙌🙌
+                     <div id="score-text"></div>
+                     <ul class="correct-answers-explanation">
+                        <h4>Correct Answers with Explanation</h4>
+                        <div class="correct-answers-container"></div>
+                    </ul>
+                     <!-- <div class="wrong-answers"><h2>Correct Answers with Explanation</h2></div> -->
+
+                     <div class="btn-container">
+                        <button id="restart-btn" class="start-btn" onclick="restartQuizz()">Restart the QUIZZ</button>
+                    </div>
+                </h1>
+            </div>
+        </main>
+        <footer>
+    
+        </footer>
+    </div>
+</body>
+<script src="main.js"></script>
+</html>
+
+
+
+
