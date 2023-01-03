@@ -54,8 +54,8 @@ function generateJsonQuestionData(){
     $dataAnswersExplanation = json_encode($data_answers_explanation);
     
     $filename_questions = 'questions_data.json';
-    $filename_answers_explanation = 'questions_data.json';
-    if(file_put_contents($filename_answers_explanation,$dataAnswersExplanation)) echo "answers_explanation_data generated successfully";
+    $filename_answers_explanation = 'answers_explanation_data.json';
+    if(file_put_contents($filename_answers_explanation,$dataAnswersExplanation)) echo "answers_explanation_data generated successfully <br>";
     if(file_put_contents($filename_questions,$dataQuestions)) echo "questions_data generated successfully";
 
     switch (json_last_error()) {
@@ -85,20 +85,6 @@ function generateJsonQuestionData(){
 }
 
 generateJsonQuestionData();
-
-// function generateJsonAnswersExplanationData(){
-    
-//     $instance = new Database();
-//    $data =  $instance->fetchAll('SELECT * FROM answers_explanation');
-   
-//     var_dump($data);
-//     return $dataArray = json_encode($data);
-    
-// }
-// echo 'starting';
-// $filename = 'answers_explanation_data.json';
-// if(file_put_contents($filename,generateJsonAnswersExplanationData())) echo "answers_explanation_data generated successfully";
-
 
 
 
