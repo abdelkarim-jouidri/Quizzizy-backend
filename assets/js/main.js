@@ -8,7 +8,7 @@
     let counter = 0;
     let width = 0;
     let timerCounter = 0
-    let timeInterval = 5;
+    let timeInterval = 1;
     let currentRandomQuestion = {}
     let answersData = []
     let wrongAnswers = []
@@ -28,7 +28,7 @@
     
 //-------------------------------------------------------------------------------------------------------------------------------  
     function fetchQuestionsData(){
-        fetch('questions_data.json')
+        fetch('assets/json/questions_data.json')
         .then(res=>res.json())
         .then(data=>QuestionsData=[...data])
         .catch(error=>{
@@ -36,7 +36,7 @@
         })
     } 
     function fetchAnswersData(){
-        fetch('answers_explanation_data.json')
+        fetch('assets/json/answers_explanation_data.json')
         .then(res=>res.json())
         .then(data=>{
             checkAnswers(data)

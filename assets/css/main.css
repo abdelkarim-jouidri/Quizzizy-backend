@@ -260,3 +260,8 @@ main .question-cards-container .card:hover {
   background: #158a08 !important;
 }
 
+#timer {
+  text-align: center;
+  font-size: x-large;
+  font-weight: bold;
+}
