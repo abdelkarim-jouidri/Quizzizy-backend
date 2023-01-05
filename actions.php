@@ -43,7 +43,7 @@ class Database{
 }
 
 
-function generateJsonQuestionData(){
+function generateJsonQuestionAnswersData(){
     
     $instance = new Database();
    $data_questions =  $instance->fetchAll('SELECT * FROM questions');
@@ -84,8 +84,8 @@ function generateJsonQuestionData(){
 
 }
 
-generateJsonQuestionData();
+generateJsonQuestionAnswersData();
 
-
+print_r($_SERVER)
 
 ?>
